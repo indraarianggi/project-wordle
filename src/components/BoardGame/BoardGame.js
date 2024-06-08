@@ -1,26 +1,13 @@
 import React from "react";
+import { range } from "../../utils";
+import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
+import Guess from "../Guess";
 
 function BoardGame({ guesses = [] }) {
   return (
     <div className="guess-results">
-      {guesses.map((guess, guessIndex) => (
-        <p key={guessIndex} className="guess">
-          {guess ? (
-            guess.map(({ letter, status }, letterIndex) => (
-              <span key={letterIndex} className={`cell ${status}`}>
-                {letter}
-              </span>
-            ))
-          ) : (
-            <>
-              <span className="cell"></span>
-              <span className="cell"></span>
-              <span className="cell"></span>
-              <span className="cell"></span>
-              <span className="cell"></span>
-            </>
-          )}
-        </p>
+      {range(NUM_OF_GUESSES_ALLOWED).map((num) => (
+        <Guess key={num} guess={guesses[num]} />
       ))}
     </div>
   );

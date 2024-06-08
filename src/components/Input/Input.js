@@ -19,8 +19,9 @@ function Input({ onSubmit, disabled }) {
       <input
         id="guess-input"
         type="text"
-        required
-        pattern=".{5}"
+        minLength={5}
+        maxLength={5}
+        pattern="[a-zA-Z]{5}"
         title="Please enter exactly 5 characters"
         disabled={disabled}
         value={value}

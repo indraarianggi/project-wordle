@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { range, sample } from "../../utils";
+import { sample } from "../../utils";
 import { WORDS } from "../../data";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 import BoardGame from "../BoardGame";
@@ -15,31 +15,23 @@ console.info({ answer });
 
 function Game() {
   const [isWinning, setIsWinning] = React.useState();
-  const [guesses, setGuesses] = React.useState(() => {
-    const guessSlots = range(0, NUM_OF_GUESSES_ALLOWED).map(() => undefined);
-    return guessSlots;
-  });
-  const [numOfInputGuesses, setNumOfInputGuesses] = React.useState(0);
+  const [guesses, setGuesses] = React.useState([]);
 
   const handleSubmit = (newGuess) => {
-    if (numOfInputGuesses >= NUM_OF_GUESSES_ALLOWED) return;
-
-    const nextNumOfInputGuesses = numOfInputGuesses + 1;
+    if (!newGuess || guesses.length >= NUM_OF_GUESSES_ALLOWED) return;
 
     const newGuessCheckResult = checkGuess(newGuess, answer);
-    const nextGuesses = [...guesses];
-    nextGuesses[numOfInputGuesses] = newGuessCheckResult;
+    const nextGuesses = [...guesses, newGuessCheckResult];
 
     const winningStatus = checkWinningStatus(newGuessCheckResult);
 
     if (winningStatus) {
       setIsWinning(winningStatus);
-    } else if (nextNumOfInputGuesses === NUM_OF_GUESSES_ALLOWED) {
+    } else if (nextGuesses.length >= NUM_OF_GUESSES_ALLOWED) {
       setIsWinning(false);
     }
 
     setGuesses(nextGuesses);
-    setNumOfInputGuesses(nextNumOfInputGuesses);
   };
 
   return (
