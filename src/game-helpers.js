@@ -53,3 +53,11 @@ export function checkGuess(guess, answer) {
 
   return result;
 }
+
+/**
+ * 
+ * @param {array} guessResult The result from checkGuess function
+ */
+export function checkWinningStatus(guessResult) {
+  return guessResult.every(({status}) => status === 'correct');
+}
